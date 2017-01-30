@@ -12,7 +12,7 @@ ENV REFRESHED_AT 2017-01-30
 RUN sed -i 's/httpredir/ftp.us/g' /etc/apt/sources.list
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes  clang-3.8 pbuilder 
+RUN apt-get install --assume-yes  clang-3.9 pbuilder 
 
 VOLUME /code
 
