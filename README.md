@@ -24,16 +24,20 @@ make
 ```
 
 # build locally the image
+for instance:
 ```
-cd ${DIST}; docker build --tag=pkg-kamailio-docker:${DIST} .
+export DIST=stretch VERSION=dev
+```
+```
+cd ${DIST}; docker build --tag=pkg-kamailio-docker:${VERSION}-${DIST} .
 ```
 
 or pull the image from docker hub
 
 ```
-docker pull kamailio/pkg-kamailio-docker:${DIST}
+docker pull kamailio/pkg-kamailio-docker:${VERSION}-${DIST}
 ```
 # run container
 ```
-docker run -i -t --rm -v src:/code:rw kamailio/pkg-kamailio-docker:${DIST} /bin/bash
+docker run -i -t --rm -v src:/code:rw kamailio/pkg-kamailio-docker:${VESION}-${DIST} /bin/bash
 ```
