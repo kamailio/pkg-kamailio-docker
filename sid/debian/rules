@@ -44,7 +44,7 @@ PACKAGE_GROUPS=mysql postgres berkeley unixodbc radius presence \
 EXTRA_GROUPS=gzcompress uuid ev jansson http_async
 
 # name of libdir in the path for libraries (e.g., lib for 32b, lib64 for 64b)
-LIBDIR ?= lib/$(DEB_HOST_MULTIARCH)
+export LIBDIR ?= lib/$(DEB_HOST_MULTIARCH)
 
 # directories with possible duplicate libraries (that should be deleted
 # from current module* packages)
@@ -107,8 +107,8 @@ endef
 
 # CFLAGS + CPPFLAGS -> CC_EXTRA_OPTS
 CC_EXTRA_OPTS := $(shell dpkg-buildflags --get CPPFLAGS)
-CC_EXTRA_OPTS += $(shell dpkg-buildflags --get CFLAGS)
-CXXFLAGS := $(shell dpkg-buildflags --get CXXFLAGS)
+CC_EXTRA_OPTS += $(shell DEB_CFLAGS_MAINT_STRIP=-O2 dpkg-buildflags --get CFLAGS)
+CXXFLAGS := $(shell DEB_CXXFLAGS_MAINT_STRIP=-O2 dpkg-buildflags --get CXXFLAGS)
 # LDFLAGS -> LD_EXTRA_OPTS
 LD_EXTRA_OPTS := $(shell dpkg-buildflags --get LDFLAGS)
 
@@ -156,7 +156,7 @@ install: build
 	dh_prep
 	dh_installdirs
 	# Add here commands to install the package into debian/kamailio
-	$(MAKE) install LIBDIR=$(LIBDIR) group_include="kstandard"
+	$(MAKE) install group_include="kstandard"
 	# make group packages
 	$(call PACKAGE_GRP_INSTALL_template)
 	$(call PACKAGE_EXTRA_INSTALL_template)
