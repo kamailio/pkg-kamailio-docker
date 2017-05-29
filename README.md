@@ -39,5 +39,5 @@ docker pull kamailio/pkg-kamailio-docker:${VERSION}-${DIST}
 ```
 # run container
 ```
-docker run -i -t --rm -v src:/code:rw kamailio/pkg-kamailio-docker:${VERSION}-${DIST} /bin/bash
+docker run -i -t --rm -v `pwd`/src:/code:rw kamailio/pkg-kamailio-docker:${VERSION}-${DIST} /bin/bash
 ```
