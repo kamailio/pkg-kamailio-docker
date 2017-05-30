@@ -27,7 +27,7 @@ EOF
 elif [ "${base}" = "debian" ] ; then
 cat >>"${dist}"/Dockerfile <<EOF
 # avoid httpredir errors
-RUN sed -i 's/httpredir/ftp.us/g' /etc/apt/sources.list
+RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
 
 EOF
 fi
