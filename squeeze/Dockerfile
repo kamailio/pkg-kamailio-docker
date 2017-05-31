@@ -6,7 +6,7 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2017-05-30
+ENV REFRESHED_AT 2017-05-31
 
 RUN echo "deb http://archive.debian.org/debian squeeze main" > /etc/apt/sources.list;     echo "deb http://archive.debian.org/debian squeeze-lts main" >> /etc/apt/sources.list ;     echo "Acquire::Check-Valid-Until false;" >> /etc/apt/apt.conf
 
