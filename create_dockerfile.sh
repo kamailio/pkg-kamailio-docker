@@ -68,12 +68,12 @@ case ${dist} in
 	squeeze|wheezy) CLANG="" ;;
 	jessie)	        CLANG=" clang-3.5" ;;
 	stretch)        CLANG=" clang-3.8" ;;
-	sid)            CLANG=" clang-3.9" ;;
+	sid|buster)     CLANG=" clang-3.9" ;;
 esac
 
 case ${dist} in
   xenial|trusty|precise) base=ubuntu ;;
-  squeeze|wheezy|jessie|stretch|sid) base=debian ;;
+  squeeze|wheezy|jessie|stretch|buster|sid) base=debian ;;
   *)
     echo "ERROR: no ${dist} base found"
     exit 1
