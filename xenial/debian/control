@@ -8,7 +8,6 @@ Uploaders:
 Build-Depends:
  bison,
  debhelper (>= 9),
- libmysqlclient-dev,
  dh-systemd (>= 1.5),
  docbook-xml,
  dpkg-dev (>= 1.16.1.1),
@@ -21,6 +20,7 @@ Build-Depends:
  libev-dev,
  libevent-dev,
  libexpat1-dev,
+ libgeocoding-dev (>= 7),
  libgeoip-dev (>= 1.4.5),
  libhiredis-dev (>= 0.10.0),
  libjansson-dev,
@@ -29,7 +29,9 @@ Build-Depends:
  liblua5.1-0-dev,
  libmaxminddb-dev,
  libmemcached-dev,
+ libmongoc-dev,
  libmono-2.0-dev,
+ libmysqlclient-dev,
  libncurses5-dev,
  libpcre3-dev,
  libperl-dev,
@@ -296,8 +298,8 @@ Multi-Arch: same
 Pre-Depends:
  ${misc:Pre-Depends},
 Depends:
- mysql-client | virtual-mysql-client,
  kamailio (= ${binary:Version}),
+ mysql-client | virtual-mysql-client,
  ${misc:Depends},
  ${shlibs:Depends},
 Description: MySQL database connectivity module for Kamailio
@@ -794,6 +796,23 @@ Description: phonenum modules for the Kamailio SIP server
  .
  This package provides real-time queries against the libphonenumber to be
  performed directly from the Kamailio configuration and routing scripts.
+
+Package: kamailio-mongodb-modules
+Architecture: linux-any
+Multi-Arch: same
+Pre-Depends:
+ ${misc:Pre-Depends},
+Depends:
+ kamailio (= ${binary:Version}),
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: mongodb modules for the Kamailio SIP server
+ Kamailio is a very fast and flexible SIP (RFC3261)
+ server. Written entirely in C, Kamailio can handle thousands calls
+ per second even on low-budget hardware.
+ .
+ This package provides the mongodb database driver and non-db connector for
+ Kamailio.
 
 Package: kamailio-extra-modules
 Architecture: linux-any
