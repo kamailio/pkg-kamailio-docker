@@ -72,7 +72,7 @@ case ${dist} in
 esac
 
 case ${dist} in
-  xenial|trusty|precise) base=ubuntu ;;
+  bionic|xenial|trusty|precise) base=ubuntu ;;
   squeeze|wheezy|jessie|stretch|buster|sid) base=debian ;;
   *)
     echo "ERROR: no ${dist} base found"

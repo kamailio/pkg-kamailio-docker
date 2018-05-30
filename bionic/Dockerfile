@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM ubuntu:bionic
 
 MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 
