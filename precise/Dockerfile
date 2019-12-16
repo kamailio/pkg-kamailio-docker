@@ -6,7 +6,7 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2018-12-24
+ENV REFRESHED_AT 2019-12-16
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
 RUN apt-get install --assume-yes  pbuilder 
