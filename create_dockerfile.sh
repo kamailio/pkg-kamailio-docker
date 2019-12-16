@@ -17,14 +17,7 @@ ENV REFRESHED_AT ${DATE}
 
 EOF
 
-if [ -n "${archived}" ] ; then
-cat >>"${dist}"/Dockerfile <<EOF
-RUN echo "deb http://archive.debian.org/debian ${dist} main" > /etc/apt/sources.list; \
-    echo "deb http://archive.debian.org/debian ${dist}-lts main" >> /etc/apt/sources.list ; \
-    echo "Acquire::Check-Valid-Until false;" >> /etc/apt/apt.conf
-
-EOF
-elif [ "${base}" = "debian" ] ; then
+if [ "${base}" = "debian" ] ; then
 cat >>"${dist}"/Dockerfile <<EOF
 # avoid httpredir errors
 RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
@@ -73,15 +66,12 @@ esac
 
 case ${dist} in
   bionic|xenial|trusty|precise) base=ubuntu ;;
-  squeeze|wheezy|jessie|stretch|buster|sid) base=debian ;;
+  squeeze|wheezy|jessie) base=debian/eol ;;
+  stretch|buster|sid) base=debian ;;
   *)
     echo "ERROR: no ${dist} base found"
     exit 1
     ;;
-esac
-
-case ${dist} in
-  squeeze) archived=true ;;
 esac
 
 create_dockerfile
