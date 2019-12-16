@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian/eol:jessie
 
 MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 
@@ -7,9 +7,6 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
 ENV REFRESHED_AT 2019-12-16
-
-# avoid httpredir errors
-RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
 RUN apt-get install --assume-yes  clang-3.5 pbuilder 
