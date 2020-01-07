@@ -61,7 +61,8 @@ case ${dist} in
 	squeeze|wheezy) CLANG="" ;;
 	jessie)	        CLANG=" clang-3.5" ;;
 	stretch)        CLANG=" clang-3.8" ;;
-	sid|buster)     CLANG=" clang-7" ;;
+	buster)         CLANG=" clang-7" ;;
+	sid)            CLANG=" clang-8" ;;
 esac
 
 case ${dist} in

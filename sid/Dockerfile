@@ -12,7 +12,7 @@ ENV REFRESHED_AT 2020-01-07
 RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes  clang-7 pbuilder 
+RUN apt-get install --assume-yes  clang-8 pbuilder 
 
 VOLUME /code
 
