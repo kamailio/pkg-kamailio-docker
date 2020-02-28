@@ -1,0 +1,143 @@
+version: 2
+jobs:
+  default: &default
+    docker:
+      - image: alpine:edge
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Install Docker client
+          command: |
+            set -x
+            VER="19.03.2"
+            apk add curl
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
+      - run:
+          name: Is builder image avaialable
+          command: |
+            tag=$(echo ${base_image}-${image_tag} | sed -e 's|/|_|')
+            if ! docker pull ${docker_repo_owner}/pkg-kamailio-docker:${tag}; then
+                echo "builder image not exist, creating first time"
+                docker build \
+                  --build-arg base_image=${base_image} \
+                  --build-arg image_tag=${image_tag} \
+                  -t ${docker_repo_owner}/pkg-kamailio-docker:${tag} \
+                  rpm
+                docker login --username "${docker_repo_owner}" --password "${docker_repo_pass}"
+                docker push ${docker_repo_owner}/pkg-kamailio-docker:${tag}
+                rm -Rf ~/.docker
+            else
+                echo "builder 'pkg-kamailio-docker:${tag}' image already exist on hub.docker.com, doing nothing"
+            fi
+      - run:
+          name: Is need update builder image
+          command: |
+            tag=$(echo ${base_image}-${image_tag} | sed -e 's|/|_|')
+            chmod 755 .circleci/is_fresh_image.sh
+            docker create --rm \
+                --name check_updates \
+                --entrypoint=/is_fresh_image.sh \
+                ${docker_repo_owner}/pkg-kamailio-docker:${tag}
+            docker cp `pwd`/.circleci/is_fresh_image.sh check_updates:/is_fresh_image.sh
+            if ! docker start -ai check_updates; then
+                echo "refreshing builder image"
+                docker rmi ${docker_repo_owner}/pkg-kamailio-docker:${tag}
+                docker build \
+                  --build-arg base_image=${base_image} \
+                  --build-arg image_tag=${image_tag} \
+                  -t ${docker_repo_owner}/pkg-kamailio-docker:${tag} \
+                  rpm
+                docker login --username "${docker_repo_owner}" --password "${docker_repo_pass}"
+                docker push ${docker_repo_owner}/pkg-kamailio-docker:${tag}
+                rm -Rf ~/.docker
+            else
+                echo "current 'pkg-kamailio-docker:${tag}' image is freesh, skiping image update";
+            fi
+
+  fedora-30:
+    <<: *default
+    environment:
+      base_image: "fedora"
+      image_tag: "30"
+
+  fedora-31:
+    <<: *default
+    environment:
+      base_image: "fedora"
+      image_tag: "31"
+
+  fedora-32:
+    <<: *default
+    environment:
+      base_image: "fedora"
+      image_tag: "32"
+
+  fedora-33:
+    <<: *default
+    environment:
+      base_image: "fedora"
+      image_tag: "33"
+
+  centos-6:
+    <<: *default
+    environment:
+      base_image: "centos"
+      image_tag: "6"
+
+  centos-7:
+    <<: *default
+    environment:
+      base_image: "centos"
+      image_tag: "7"
+
+  centos-8:
+    <<: *default
+    environment:
+      base_image: "centos"
+      image_tag: "8"
+
+  opensuse_leap-42:
+    <<: *default
+    environment:
+      base_image: "opensuse/leap"
+      image_tag: "42"
+
+  opensuse_leap-15:
+    <<: *default
+    environment:
+      base_image: "opensuse/leap"
+      image_tag: "15"
+
+  opensuse_tumbleweed-latest:
+    <<: *default
+    environment:
+      base_image: "opensuse/tumbleweed"
+      image_tag: "latest"
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - fedora-30:
+          context: docker_creds
+      - fedora-31:
+          context: docker_creds
+      - fedora-32:
+          context: docker_creds
+      - fedora-33:
+          context: docker_creds
+      - centos-6:
+          context: docker_creds
+      - centos-7:
+          context: docker_creds
+      - centos-8:
+          context: docker_creds
+      - opensuse_leap-42:
+          context: docker_creds
+      - opensuse_leap-15:
+          context: docker_creds
+      - opensuse_tumbleweed-latest:
+          context: docker_creds
