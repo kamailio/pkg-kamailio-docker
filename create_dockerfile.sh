@@ -62,7 +62,7 @@ case ${dist} in
 	jessie)	        CLANG=" clang-3.5" ;;
 	stretch)        CLANG=" clang-3.8" ;;
 	buster)         CLANG=" clang-7" ;;
-	sid)            CLANG=" clang-8" ;;
+	sid)            CLANG=" clang-10" ;;
 esac
 
 case ${dist} in
