@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian:bullseye
 
 MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 
@@ -12,7 +12,7 @@ ENV REFRESHED_AT 2021-05-07
 RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes  clang-3.8 pbuilder 
+RUN apt-get install --assume-yes  clang-11 pbuilder 
 
 VOLUME /code
 

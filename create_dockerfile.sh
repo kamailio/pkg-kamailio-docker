@@ -67,7 +67,7 @@ case ${dist} in
 esac
 
 case ${dist} in
-  bionic|xenial|trusty|precise) base=ubuntu ;;
+  focal|bionic|xenial|trusty|precise) base=ubuntu ;;
   squeeze|wheezy|jessie) base=debian/eol ;;
   stretch|buster|bullseye|sid) base=debian ;;
   *)

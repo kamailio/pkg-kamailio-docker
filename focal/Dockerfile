@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM ubuntu:focal
 
 MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 
@@ -8,11 +8,8 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 # old cached versions when the Dockerfile is built.
 ENV REFRESHED_AT 2021-05-07
 
-# avoid httpredir errors
-RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
-
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes  clang-3.8 pbuilder 
+RUN apt-get install --assume-yes  pbuilder 
 
 VOLUME /code
 
