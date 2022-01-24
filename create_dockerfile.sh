@@ -63,7 +63,7 @@ case ${dist} in
 	stretch)        CLANG=" clang-3.8" ;;
 	buster)         CLANG=" clang-7" ;;
 	bullseye)       CLANG=" clang-11" ;;
-	sid)            CLANG=" clang-11" ;;
+	sid)            CLANG=" clang-13" ;;
 esac
 
 case ${dist} in
