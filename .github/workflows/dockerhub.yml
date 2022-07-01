@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - 'master'
+      - '5.*'
 
 jobs:
   docker:
@@ -24,10 +25,18 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - if: ${{ github.ref_name != 'master' }}
+        name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: "{{defaultContext}}:${{ matrix.dist }}"
+          push: true
+          tags: kamailio/pkg-kamailio-docker:${{ github.ref_name }}-${{ matrix.dist }}
       - if: ${{ github.ref_name == 'master' }}
         name: Build and push
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:${{ matrix.dist }}"
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: kamailio/pkg-kamailio-docker:dev-${{ matrix.dist }}
