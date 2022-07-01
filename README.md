@@ -1,6 +1,6 @@
 # Description
 
-Docker Debian based Images with dependences installed ready to be used
+Docker Debian based Images with dependencies installed ready to be used
 to build Kamailio from sources
 
 # Upgrade
@@ -25,7 +25,7 @@ make
 # build locally the image
 for instance:
 ```
-export DIST=stretch VERSION=dev
+export DIST=bullseye VERSION=master
 ```
 ```
 cd ${DIST}; docker build --tag=pkg-kamailio-docker:${VERSION}-${DIST} .
