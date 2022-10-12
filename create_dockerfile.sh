@@ -27,6 +27,7 @@ fi
 
 cat >>"${dist}"/Dockerfile <<EOF
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
+RUN echo 'MIRRORSITE="http://deb.debian.org/debian"' > /etc/pbuilderrc
 RUN apt-get install -qq --assume-yes ${CLANG} pbuilder ${TOOLS}
 
 VOLUME /code
