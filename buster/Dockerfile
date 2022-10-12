@@ -9,10 +9,10 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 ENV REFRESHED_AT 2022-10-12
 
 # avoid httpredir errors
-RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
+RUN find /etc/apt -name '*.list' -exec sed -i 's/httpredir/deb/g' {} \;
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes  clang-7 pbuilder 
+RUN apt-get install -qq --assume-yes  clang-7 pbuilder 
 
 VOLUME /code
 

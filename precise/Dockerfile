@@ -9,7 +9,7 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 ENV REFRESHED_AT 2022-10-12
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes  clang pbuilder 
+RUN apt-get install -qq --assume-yes  clang pbuilder 
 
 VOLUME /code
 
