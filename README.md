@@ -37,6 +37,24 @@ or pull the image from docker hub
 docker pull kamailio/pkg-kamailio-docker:${VERSION}-${DIST}
 ```
 # run container
+
+If you built the docker image locally:
 ```
-docker run -i -t --rm -v `pwd`/src:/code:rw kamailio/pkg-kamailio-docker:${VERSION}-${DIST} /bin/bash
+IMAGE=pkg-kamailio-docker
+```
+or if you've pulled it from docker hub:
+```
+IMAGE=kamailio/pkg-kamailio-docker
+```
+
+
+Then, in all cases, go to the root folder of your kamailio source code and launch the container:
+```
+docker run -i -t --rm -v `pwd`:/code:rw ${IMAGE}:${VERSION}-${DIST} /bin/bash
+```
+
+To build the stable version of kamailio using that container, run:
+```
+cd /code
+make deb-stable
 ```
