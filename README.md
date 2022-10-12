@@ -53,7 +53,7 @@ Then, in all cases, go to the root folder of your kamailio source code and launc
 docker run -i -t --rm -v `pwd`:/code:rw ${IMAGE}:${VERSION}-${DIST} /bin/bash
 ```
 
-To build the stable version of kamailio using that container, run:
+To build kamailio against Debian stable using that container, run:
 ```
 cd /code
 make deb-stable
