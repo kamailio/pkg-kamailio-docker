@@ -6,13 +6,14 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2022-07-01
+ENV REFRESHED_AT 2022-10-12
 
 # avoid httpredir errors
-RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
+RUN find /etc/apt -name '*.list' -exec sed -i 's/httpredir/deb/g' {} \;
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes  clang-13 pbuilder 
+RUN echo 'MIRRORSITE="http://deb.debian.org/debian"' > /etc/pbuilderrc
+RUN apt-get install -qq --assume-yes  clang-13 pbuilder 
 
 VOLUME /code
 
