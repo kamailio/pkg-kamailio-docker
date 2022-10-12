@@ -9,6 +9,7 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 ENV REFRESHED_AT 2022-10-12
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
+RUN echo 'MIRRORSITE="http://deb.debian.org/debian"' > /etc/pbuilderrc
 RUN apt-get install -qq --assume-yes  clang pbuilder 
 
 VOLUME /code
