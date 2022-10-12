@@ -20,14 +20,14 @@ EOF
 if [ "${base}" = "debian" ] ; then
 cat >>"${dist}"/Dockerfile <<EOF
 # avoid httpredir errors
-RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
+RUN find /etc/apt -name '*.list' -exec sed -i 's/httpredir/deb/g' {} \;
 
 EOF
 fi
 
 cat >>"${dist}"/Dockerfile <<EOF
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes ${CLANG} pbuilder ${TOOLS}
+RUN apt-get install -qq --assume-yes ${CLANG} pbuilder ${TOOLS}
 
 VOLUME /code
 
