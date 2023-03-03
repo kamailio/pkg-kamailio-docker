@@ -114,22 +114,23 @@ BUILD_MODULES   := $(addprefix build_,   $(PACKAGE_GROUPS) $(EXTRA_GROUPS))
 INSTALL_MODULES := $(addprefix install_, $(PACKAGE_GROUPS))
 INSTALL_EXTRA   := $(addprefix install_, $(EXTRA_GROUPS))
 
-.PHONY: test_build_all $(BUILD_MODULES) test_install_all $(INSTALL_MODULES) $(INSTALL_EXTRA)
-test_build_all:
+.PHONY: test_build_all $(BUILD_MODULES) $(INSTALL_MODULES) $(INSTALL_EXTRA)
+test_build_all: configure
 	dh_testdir
 	$(MAKE) all quiet=verbose
 
 $(BUILD_MODULES): test_build_all
 	$(MAKE) every-module group_include="k$(subst build_,,$@)" quiet=verbose
 
-test_install_all:
+test_install_all-stamp: build
 	dh_testdir
 	dh_testroot
 	dh_prep
 	dh_installdirs
 	$(MAKE) install quiet=verbose LIBDIR=$(LIBDIR) group_include="kstandard"
+	touch test_install_all-stamp
 
-$(INSTALL_MODULES): test_install_all
+$(INSTALL_MODULES): test_install_all-stamp
 	$(MAKE) install-modules-all \
 	  quiet=verbose \
 	  LIBDIR=$(LIBDIR) \
@@ -141,18 +142,21 @@ $(INSTALL_MODULES): test_install_all
 	for d in $(DUP_LIBS_DIRS); do \
 	  test "$$d" != "$(D)-$${module}-modules/usr/$(LIBDIR)/kamailio" && \
 	  for r in `find $$d -name 'lib*' | xargs`; do \
-	    echo "removing $(GRP) lib `basename $$r` present also in $$d"; \
+	    echo "removing $(subst install_,,$@) lib `basename $$r` present also in $$d"; \
 	    rm -f $(D)-$(subst install_,,$@)-modules/usr/$(LIBDIR)/kamailio/`basename "$$r"`; \
 	  done ; \
 	done
 	# clean empty dirs
-	find $(D)-$(GRP)-modules -depth -empty -type d -exec rmdir {} \;
+	find $(D)-$(subst install_,,$@)-modules -depth -empty -type d -exec rmdir {} \;
 
-$(INSTALL_EXTRA):
-	$(MAKE) install-modules-all LIBDIR=$(LIBDIR) group_include="k$(subst install_,,$@)" \
+$(INSTALL_EXTRA): test_install_all-stamp
+	$(MAKE) install-modules-all \
+	  quiet=verbose \
+	  LIBDIR=$(LIBDIR) \
 	  BASEDIR=$(D)-extra-modules \
 	  cfg_prefix=$(D)-extra-modules \
-	  doc-dir=share/doc/$(DEB_SOURCE)-extra-modules
+	  doc-dir=share/doc/$(DEB_SOURCE)-extra-modules \
+	  group_include="k$(subst install_,,$@)"
 	# Eliminate duplicate extra libs.
 	for d in $(DUP_LIBS_DIRS); do \
 	  test "$$d" != "$(D)-extra-modules/usr/$(LIBDIR)/kamailio" && \
@@ -189,7 +193,7 @@ build-stamp: configure-stamp $(BUILD_MODULES)
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp configure-stamp
+	rm -f build-stamp configure-stamp test_install_all-stamp
 	# Add here commands to clean up after the build process.
 	$(MAKE) maintainer-clean
 	dh_clean
