@@ -69,8 +69,8 @@ esac
 
 case ${dist} in
   jammy|focal|bionic|xenial|trusty|precise) base=ubuntu ;;
-  squeeze|wheezy|jessie) base=debian/eol ;;
-  stretch|buster|bullseye|bookworm|sid) base=debian ;;
+  squeeze|wheezy|jessie|stretch) base=debian/eol ;;
+  buster|bullseye|bookworm|sid) base=debian ;;
   *)
     echo "ERROR: no ${dist} base found"
     exit 1
