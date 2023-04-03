@@ -30,5 +30,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: "{{defaultContext}}:${{ matrix.dist }}"
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ghcr.io/kamailio/pkg-kamailio-docker:${{ github.ref_name }}-${{ matrix.dist }}
