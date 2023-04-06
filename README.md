@@ -1,6 +1,6 @@
 # Description
 
-Docker Debian based Images with dependencies installed ready to be used
+Docker Debian based Images with dependencies installed, ready to be used
 to build Kamailio from sources
 
 # Upgrade
@@ -31,10 +31,10 @@ export DIST=bullseye VERSION=master
 cd ${DIST}; docker build --tag=pkg-kamailio-docker:${VERSION}-${DIST} .
 ```
 
-or pull the image from docker hub
+or pull the image from Github Packages
 
 ```
-docker pull kamailio/pkg-kamailio-docker:${VERSION}-${DIST}
+docker pull ghcr.io/kamailio/pkg-kamailio-docker:${VERSION}-${DIST}
 ```
 # run container
 
@@ -42,9 +42,9 @@ If you built the docker image locally:
 ```
 IMAGE=pkg-kamailio-docker
 ```
-or if you've pulled it from docker hub:
+or if you've pulled it from Github Packages:
 ```
-IMAGE=kamailio/pkg-kamailio-docker
+IMAGE=ghcr.io/kamailio/pkg-kamailio-docker
 ```
 
 
