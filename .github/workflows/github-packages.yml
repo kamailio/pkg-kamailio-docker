@@ -4,8 +4,7 @@ name: github-packages
 on:
   push:
     branches:
-      - 'master'
-      - '5.*'
+      - '5.4'
 
 jobs:
   docker:
@@ -13,7 +12,7 @@ jobs:
     strategy:
       matrix:
         dist:
-          - bullseye
+          - buster
           - sid
     steps:
       - name: Set up QEMU
