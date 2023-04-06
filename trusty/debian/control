@@ -65,7 +65,7 @@ Pre-Depends:
 Depends:
  adduser,
  lsb-base,
- python,
+ python3,
  ${misc:Depends},
  ${shlibs:Depends},
 Replaces:
@@ -243,7 +243,6 @@ Pre-Depends:
  ${misc:Pre-Depends},
 Depends:
  kamailio (= ${binary:Version}),
- python-dev,
  ${misc:Depends},
  ${shlibs:Depends},
 Description: The app_python module for the Kamailio SIP server
@@ -261,7 +260,6 @@ Pre-Depends:
  ${misc:Pre-Depends},
 Depends:
  kamailio (= ${binary:Version}),
- python3-dev,
  ${misc:Depends},
  ${shlibs:Depends},
 Description: The app_python3 module for the Kamailio SIP server
@@ -715,6 +713,10 @@ Description: RabbitMQ and AMQP integration modules for the Kamailio SIP server
 Package: kamailio-cnxcc-modules
 Architecture: linux-any
 Multi-Arch: same
+Breaks:
+ kamailio (<<5.1),
+Replaces:
+ kamailio (<<5.1),
 Pre-Depends:
  ${misc:Pre-Depends},
 Depends:

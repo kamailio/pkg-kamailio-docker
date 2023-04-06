@@ -1,18 +1,60 @@
-kamailio (5.4.0~rc0) unstable; urgency=medium
+kamailio (5.4.9) unstable; urgency=medium
 
-  * version set 5.4.0~rc0
+  * version set 5.4.9
 
- -- Victor Seva <vseva@debian.org>  Fri, 10 Jul 2020 13:30:34 +0200
+ -- Victor Seva <vseva@debian.org>  Fri, 16 Sep 2022 08:52:41 +0200
 
-kamailio (5.4.0~pre1) unstable; urgency=medium
+kamailio (5.4.8) unstable; urgency=medium
 
-  * version set 5.4.0~pre1
+  * version set 5.4.8
 
- -- Victor Seva <vseva@debian.org>  Thu, 02 Jul 2020 16:32:52 +0200
+ -- Victor Seva <vseva@debian.org>  Wed, 09 Mar 2022 09:29:08 +0100
 
-kamailio (5.4.0~pre0) unstable; urgency=medium
+kamailio (5.4.7) unstable; urgency=medium
 
-  * version set 5.4.0~pre0
+  * version set 5.4.7
 
- -- Victor Seva <vseva@debian.org>  Fri, 19 Jun 2020 10:01:28 +0200
+ -- Victor Seva <vseva@debian.org>  Wed, 22 Sep 2021 10:15:28 +0200
+
+kamailio (5.4.6) unstable; urgency=medium
+
+  * version set 5.4.6
+
+ -- Victor Seva <vseva@debian.org>  Wed, 02 Jun 2021 10:58:24 +0200
+
+kamailio (5.4.5) unstable; urgency=medium
+
+  * version set 5.4.5
+
+ -- Victor Seva <vseva@debian.org>  Thu, 15 Apr 2021 09:50:36 +0200
+
+kamailio (5.4.4) unstable; urgency=medium
+
+  * version set 5.4.4
+
+ -- Victor Seva <vseva@debian.org>  Mon, 15 Feb 2021 09:31:26 +0100
+
+kamailio (5.4.3) unstable; urgency=medium
+
+  * version set 5.4.3 
+
+ -- Victor Seva <vseva@debian.org>  Mon, 14 Dec 2020 09:44:12 +0100
+
+kamailio (5.4.2) unstable; urgency=medium
+
+  * version set 5.4.2
+
+ -- Victor Seva <vseva@debian.org>  Tue, 27 Oct 2020 11:44:52 +0100
+
+kamailio (5.4.1) unstable; urgency=medium
+
+  * version set 5.4.1
+
+ -- Victor Seva <vseva@debian.org>  Tue, 01 Sep 2020 09:11:53 +0200
+
+kamailio (5.4.0) unstable; urgency=medium
+
+  * version set 5.4.0
+
+ -- Victor Seva <vseva@debian.org>  Wed, 29 Jul 2020 09:11:23 +0200
 
