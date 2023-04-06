@@ -9,7 +9,8 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 ENV REFRESHED_AT 2023-04-06
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes  pbuilder 
+RUN echo 'MIRRORSITE="http://deb.debian.org/debian"' > /etc/pbuilderrc
+RUN apt-get install -qq --assume-yes  pbuilder 
 
 VOLUME /code
 
