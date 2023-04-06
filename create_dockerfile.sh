@@ -20,14 +20,15 @@ EOF
 if [ "${base}" = "debian" ] ; then
 cat >>"${dist}"/Dockerfile <<EOF
 # avoid httpredir errors
-RUN sed -i 's/httpredir/deb/g' /etc/apt/sources.list
+RUN find /etc/apt -name '*.list' -exec sed -i 's/httpredir/deb/g' {} \;
 
 EOF
 fi
 
 cat >>"${dist}"/Dockerfile <<EOF
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install --assume-yes ${CLANG} pbuilder ${TOOLS}
+RUN echo 'MIRRORSITE="http://deb.debian.org/debian"' > /etc/pbuilderrc
+RUN apt-get install -qq --assume-yes ${CLANG} pbuilder ${TOOLS}
 
 VOLUME /code
 
@@ -62,14 +63,14 @@ case ${dist} in
 	jessie)	        CLANG=" clang-3.5" ;;
 	stretch)        CLANG=" clang-3.8" ;;
 	buster)         CLANG=" clang-7" ;;
-	bullseye)       CLANG=" clang-10" ;;
-	sid)            CLANG=" clang-10" ;;
+	bullseye)       CLANG=" clang-11" ;;
+  *)              CLANG=" clang" ;;
 esac
 
 case ${dist} in
-  bionic|xenial|trusty|precise) base=ubuntu ;;
-  squeeze|wheezy|jessie) base=debian/eol ;;
-  stretch|buster|bullseye|sid) base=debian ;;
+  jammy|focal|bionic|xenial|trusty|precise) base=ubuntu ;;
+  squeeze|wheezy|jessie|stretch) base=debian/eol ;;
+  buster|bullseye|bookworm|sid) base=debian ;;
   *)
     echo "ERROR: no ${dist} base found"
     exit 1
