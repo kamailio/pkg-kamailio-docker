@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM debian/eol:stretch
 
 MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 
@@ -6,10 +6,7 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2023-03-03
-
-# avoid httpredir errors
-RUN find /etc/apt -name '*.list' -exec sed -i 's/httpredir/deb/g' {} \;
+ENV REFRESHED_AT 2023-05-15
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
 RUN echo 'MIRRORSITE="http://deb.debian.org/debian"' > /etc/pbuilderrc
@@ -25,3 +22,4 @@ RUN cd /usr/local/src/pkg/ && /usr/lib/pbuilder/pbuilder-satisfydepends-experime
 
 # clean
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+WORKDIR /code
