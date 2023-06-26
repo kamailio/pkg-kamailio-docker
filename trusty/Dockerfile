@@ -6,7 +6,7 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2023-06-13
+ENV REFRESHED_AT 2023-06-26
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
 RUN echo 'MIRRORSITE="http://deb.debian.org/debian"' > /etc/pbuilderrc
