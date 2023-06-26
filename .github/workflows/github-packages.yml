@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - 'master'
-      - '5.*'
 
 jobs:
   docker:
@@ -13,7 +12,7 @@ jobs:
     strategy:
       matrix:
         dist:
-          - bullseye
+          - bookworm
           - sid
     steps:
       - name: Set up QEMU
