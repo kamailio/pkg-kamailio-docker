@@ -6,7 +6,7 @@ MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2023-08-18
+ENV REFRESHED_AT 2023-09-12
 
 # avoid httpredir errors
 RUN find /etc/apt -name '*.list' -exec sed -i 's/httpredir/deb/g' {} \;
