@@ -19,6 +19,7 @@ endif
 
 export JAVA_HOME=/usr/lib/jvm/java-gcj
 export FREERADIUS=1
+export WOLFSSL_INTERNAL=no
 
 # Modules not in the "main" kamailio package:
 EXCLUDED_MODULES =
@@ -37,6 +38,7 @@ EXTRA_EXCLUDED_MODULES += mongodb
 EXTRA_EXCLUDED_MODULES += secsipid
 EXTRA_EXCLUDED_MODULES += lwsc
 EXTRA_EXCLUDED_MODULES += nats
+EXTRA_EXCLUDED_MODULES += tls_wolfssl
 ## --EXCLUDED--
 
 
