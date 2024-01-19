@@ -58,8 +58,9 @@ jobs:
     needs: docker
     steps:
       - name: purge packages
-        uses: dylanratcliffe/delete-untagged-containers@v1
+        uses: pcasteran/ghcr-cleaning-action@v1
         with:
-          org: kamailio
-          package_name: ${{ env.IMAGE_NAME }}
-          token: ${{ secrets.CLEAN_PACKAGES }}
+          password: ${{ secrets.CLEAN_PACKAGES }}
+          package: ${{ env.IMAGE_NAME }}
+          dry-run: true
+          debug: true
