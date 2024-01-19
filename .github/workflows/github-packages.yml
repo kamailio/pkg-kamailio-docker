@@ -1,11 +1,15 @@
 ---
 name: github-packages
-
 on:
   push:
     branches:
       - 'master'
-
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+env:
+  REGISTRY_NAME: ghcr.io
+  IMAGE_NAME: pkg-kamailio-docker
+  REGISTRY_IMAGE: kamailio/pkg-kamailio-docker
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -26,13 +30,36 @@ jobs:
       - name: Login to GitHub Registry
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY_NAME }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY_NAME }}/${{ env.REGISTRY_IMAGE }}
+          tags: |
+            type=raw,value=${{ github.ref_name }}-${{ matrix.dist }}
+          labels: |
+            org.opencontainers.image.title=${{ env.IMAGE_NAME }}
+            org.opencontainers.image.description=image with all required dependences
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: "{{defaultContext}}:${{ matrix.dist }}"
           platforms: linux/amd64,linux/arm64
+          labels: ${{ steps.meta.outputs.labels }}
           push: true
-          tags: ghcr.io/kamailio/pkg-kamailio-docker:${{ github.ref_name }}-${{ matrix.dist }}
+          tags: ${{ steps.meta.outputs.tags }}
+          annotations: ${{ steps.meta.outputs.annotations }}
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: purge packages
+        uses: dylanratcliffe/delete-untagged-containers@v1
+        with:
+          org: kamailio
+          package_name: ${{ env.IMAGE_NAME }}
+          token: ${{ secrets.CLEAN_PACKAGES }}
