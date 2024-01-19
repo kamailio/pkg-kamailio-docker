@@ -55,6 +55,7 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
   cleanup:
     runs-on: ubuntu-latest
+    needs: docker
     steps:
       - name: purge packages
         uses: dylanratcliffe/delete-untagged-containers@v1
