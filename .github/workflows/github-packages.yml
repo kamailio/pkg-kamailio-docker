@@ -11,17 +11,25 @@ env:
   IMAGE_NAME: pkg-kamailio-docker
   REGISTRY_IMAGE: kamailio/pkg-kamailio-docker
 jobs:
+  pre-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: set-matrix
+        run: |
+          sudo apt-get install jq
+          echo "matrix=$(bash get-all-dist.sh)" >> $GITHUB_OUTPUT
+    outputs:
+      dist: ${{ steps.set-matrix.outputs.matrix }}
   docker:
+    needs: pre-docker
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     strategy:
       matrix:
-        dist:
-          - bullseye
-          - bookworm
-          - sid
+        dist: ${{fromJson(needs.pre-docker.outputs.dist)}}
     steps:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
