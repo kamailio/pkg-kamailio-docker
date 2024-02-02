@@ -16,10 +16,10 @@ ENV REFRESHED_AT ${DATE}
 
 EOF
 
-if [[ "${docker_tag}" =~ "debian/eol" ]] ; then
+if ${archived} ; then
 cat >>"${dist}"/Dockerfile <<EOF
 # fix repositories
-RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' -e '/${dist}-updates/d' /etc/apt/sources.list
+${RULE}
 EOF
 fi
 
@@ -73,7 +73,19 @@ esac
 
 case ${base} in
   ubuntu) MIRROR=archive.ubuntu.com ;;
-  debian) MIRROR=archive.debian.org ;;
+  debian) MIRROR=deb.debian.org ;;
+esac
+
+archived=false
+case ${dist} in
+  precise)
+    archived=true ; MIRROR=old-release.ubuntu.com
+    RULE="RUN sed -i -e 's/archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list"
+    ;;
+  squeeze|wheezy|jessie|stretch)
+    archived=true ; MIRROR=archive.debian.org
+    RULE="RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' -e '/security.debian.org/d' -e '/${dist}-updates/d' /etc/apt/sources.list"
+    ;;
 esac
 
 case ${dist} in
