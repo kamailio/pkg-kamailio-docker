@@ -1,15 +1,14 @@
 FROM ubuntu:bionic
-
-MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
+LABEL org.opencontainers.image.authors Victor Seva <linuxmaniac@torreviejawireless.org>
 
 # Important! Update this no-op ENV variable when this Dockerfile
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2024-01-16
+ENV REFRESHED_AT 2024-02-02
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN echo 'MIRRORSITE="http://deb.debian.org/debian"' > /etc/pbuilderrc
+RUN echo MIRRORSITE=http://archive.ubuntu.com/ubuntu > /etc/pbuilderrc
 RUN apt-get install -qq --assume-yes  clang pbuilder 
 
 VOLUME /code
