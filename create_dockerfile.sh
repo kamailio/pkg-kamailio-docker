@@ -5,9 +5,8 @@ create_dockerfile() {
   mkdir -p "${dist}"
   cp -r "src/pkg/kamailio/deb/${dist}/" "${dist}/debian/"
   cat >"${dist}"/Dockerfile <<EOF
-FROM ${base}:${dist}
-
-MAINTAINER Victor Seva <linuxmaniac@torreviejawireless.org>
+FROM ${docker_tag}
+LABEL org.opencontainers.image.authors Victor Seva <linuxmaniac@torreviejawireless.org>
 
 # Important! Update this no-op ENV variable when this Dockerfile
 # is updated with the current date. It will force refresh of all
@@ -17,17 +16,16 @@ ENV REFRESHED_AT ${DATE}
 
 EOF
 
-if [ "${base}" = "debian" ] ; then
+if [[ "${docker_tag}" =~ "debian/eol" ]] ; then
 cat >>"${dist}"/Dockerfile <<EOF
-# avoid httpredir errors
-RUN find /etc/apt -name '*.list' -exec sed -i 's/httpredir/deb/g' {} \;
-
+# fix repositories
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' -e '/${dist}-updates/d' /etc/apt/sources.list
 EOF
 fi
 
 cat >>"${dist}"/Dockerfile <<EOF
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN echo 'MIRRORSITE="http://deb.debian.org/debian"' > /etc/pbuilderrc
+RUN echo MIRRORSITE=http://${MIRROR}/${base} > /etc/pbuilderrc
 RUN apt-get install -qq --assume-yes ${CLANG} pbuilder ${TOOLS}
 
 VOLUME /code
@@ -60,22 +58,31 @@ if ! [ -d "src/pkg/kamailio/deb/${dist}/" ] ; then
 fi
 
 case ${dist} in
+  jammy|focal|bionic|xenial|trusty|precise) base=ubuntu ;;
+  squeeze|wheezy|jessie|stretch|buster|bullseye|bookworm|sid) base=debian ;;
+  *)
+    echo "ERROR: no ${dist} base supported"
+    exit 1
+    ;;
+esac
+
+case ${dist} in
+  squeeze|wheezy|jessie|stretch) docker_tag=${base}/eol:${dist} ;;
+  *) docker_tag=${base}:${dist} ;;
+esac
+
+case ${base} in
+  ubuntu) MIRROR=archive.ubuntu.com ;;
+  debian) MIRROR=archive.debian.org ;;
+esac
+
+case ${dist} in
 	squeeze|wheezy) CLANG="" ;;
 	jessie)	        CLANG=" clang-3.5" ;;
 	stretch)        CLANG=" clang-3.8" ;;
 	buster)         CLANG=" clang-7" ;;
 	bullseye)       CLANG=" clang-11" ;;
   *)              CLANG=" clang" ;;
-esac
-
-case ${dist} in
-  jammy|focal|bionic|xenial|trusty|precise) base=ubuntu ;;
-  squeeze|wheezy|jessie|stretch) base=debian/eol ;;
-  buster|bullseye|bookworm|sid) base=debian ;;
-  *)
-    echo "ERROR: no ${dist} base found"
-    exit 1
-    ;;
 esac
 
 create_dockerfile
