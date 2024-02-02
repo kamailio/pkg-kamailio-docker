@@ -8,7 +8,7 @@ LABEL org.opencontainers.image.authors Victor Seva <linuxmaniac@torreviejawirele
 ENV REFRESHED_AT 2024-02-02
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN echo MIRRORSITE=http://archive.debian.org/debian > /etc/pbuilderrc
+RUN echo MIRRORSITE=http://deb.debian.org/debian > /etc/pbuilderrc
 RUN apt-get install -qq --assume-yes  clang-7 pbuilder 
 
 VOLUME /code

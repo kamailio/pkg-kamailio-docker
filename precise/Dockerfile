@@ -7,8 +7,10 @@ LABEL org.opencontainers.image.authors Victor Seva <linuxmaniac@torreviejawirele
 # old cached versions when the Dockerfile is built.
 ENV REFRESHED_AT 2024-02-02
 
+# fix repositories
+RUN sed -i -e 's/archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN echo MIRRORSITE=http://archive.ubuntu.com/ubuntu > /etc/pbuilderrc
+RUN echo MIRRORSITE=http://old-release.ubuntu.com/ubuntu > /etc/pbuilderrc
 RUN apt-get install -qq --assume-yes  clang pbuilder 
 
 VOLUME /code

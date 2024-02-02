@@ -8,7 +8,7 @@ LABEL org.opencontainers.image.authors Victor Seva <linuxmaniac@torreviejawirele
 ENV REFRESHED_AT 2024-02-02
 
 # fix repositories
-RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' -e '/stretch-updates/d' /etc/apt/sources.list
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' -e '/security.debian.org/d' -e '/stretch-updates/d' /etc/apt/sources.list
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
 RUN echo MIRRORSITE=http://archive.debian.org/debian > /etc/pbuilderrc
 RUN apt-get install -qq --assume-yes  clang-3.8 pbuilder 
