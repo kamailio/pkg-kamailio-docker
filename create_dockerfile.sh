@@ -26,7 +26,7 @@ fi
 cat >>"${dist}"/Dockerfile <<EOF
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
 RUN echo MIRRORSITE=http://${MIRROR}/${base} > /etc/pbuilderrc
-RUN apt-get install -qq --assume-yes ${CLANG} pbuilder ${TOOLS}
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq --assume-yes ${CLANG} pbuilder ${TOOLS}
 
 VOLUME /code
 
