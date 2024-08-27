@@ -58,7 +58,7 @@ if ! [ -d "src/pkg/kamailio/deb/${dist}/" ] ; then
 fi
 
 case ${dist} in
-  jammy|focal|bionic|xenial|trusty|precise) base=ubuntu ;;
+  noble|jammy|focal|bionic|xenial|trusty|precise) base=ubuntu ;;
   squeeze|wheezy|jessie|stretch|buster|bullseye|bookworm|sid) base=debian ;;
   *)
     echo "ERROR: no ${dist} base supported"
