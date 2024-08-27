@@ -1,11 +1,11 @@
 FROM debian/eol:wheezy
-LABEL org.opencontainers.image.authors Victor Seva <linuxmaniac@torreviejawireless.org>
+LABEL org.opencontainers.image.authors="Victor Seva <linuxmaniac@torreviejawireless.org>"
 
 # Important! Update this no-op ENV variable when this Dockerfile
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2024-02-23
+ENV REFRESHED_AT="2024-08-27"
 
 # fix repositories
 RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' -e '/security.debian.org/d' -e '/wheezy-updates/d' /etc/apt/sources.list
