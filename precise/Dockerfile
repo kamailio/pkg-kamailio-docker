@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.authors Victor Seva <linuxmaniac@torreviejawirele
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2024-02-05
+ENV REFRESHED_AT 2024-08-27
 
 # fix repositories
 RUN sed -i -e 's/archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list
