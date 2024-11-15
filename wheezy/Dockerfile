@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.authors="Victor Seva <linuxmaniac@torreviejawirel
 # is updated with the current date. It will force refresh of all
 # of the base images and things like 'apt-get update' won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT="2024-09-18"
+ENV REFRESHED_AT="2024-11-15"
 
 # fix repositories
 RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' -e '/security.debian.org/d' -e '/wheezy-updates/d' /etc/apt/sources.list
