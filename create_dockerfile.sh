@@ -97,4 +97,6 @@ case ${dist} in
   *)              CLANG=" clang" ;;
 esac
 
+TOOLS=cmake
+
 create_dockerfile
