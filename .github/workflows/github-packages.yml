@@ -11,6 +11,11 @@ on:
         description: list of dists to build, coma separated. xenial,sid
         required: false
         type: string
+      platforms:
+        description: build platforms, coma separated. linux/amd64,linux/arm64
+        required: true
+        default: linux/amd64
+        type: string
 env:
   REGISTRY_NAME: ghcr.io
   IMAGE_NAME: pkg-kamailio-docker
@@ -62,7 +67,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: "{{defaultContext}}:${{ matrix.dist }}"
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ github.event.inputs.platforms }}
           labels: ${{ steps.meta.outputs.labels }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
