@@ -51,3 +51,9 @@ Suported dist
 | rocky               | 9       |x86_64, aarch64, s390x, ppc64le|
 | fedora              | 42      |x86_64, aarch64, s390x, ppc64le|
 | fedora              | 41      |x86_64, aarch64, s390x, ppc64le|
+
+For GitHub actions required specify in repository "Secrets and variables -> Actions":
+1. REDHAT_REGISTRY_LOGIN - login to pull `ubi` docker images
+2. REDHAT_REGISTRY_TOKEN - security token to pull `ubi` docker images
+3. RHEL_USERNAME - login to get access for RHEL subscription
+4. RHEL_PASSWORD - password to get access for RHEL subscription
