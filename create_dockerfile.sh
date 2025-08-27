@@ -67,7 +67,7 @@ case ${dist} in
 esac
 
 case ${dist} in
-  squeeze|wheezy|jessie|stretch) docker_tag=${base}/eol:${dist} ;;
+  squeeze|wheezy|jessie|stretch|buster) docker_tag=${base}/eol:${dist} ;;
   *) docker_tag=${base}:${dist} ;;
 esac
 
@@ -82,7 +82,7 @@ case ${dist} in
     archived=true ; MIRROR=old-release.ubuntu.com
     RULE="RUN sed -i -e 's/archive.ubuntu.com/old-releases.ubuntu.com/g' /etc/apt/sources.list"
     ;;
-  squeeze|wheezy|jessie|stretch)
+  squeeze|wheezy|jessie|stretch|buster)
     archived=true ; MIRROR=archive.debian.org
     RULE="RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' -e '/security.debian.org/d' -e '/${dist}-updates/d' /etc/apt/sources.list"
     ;;
