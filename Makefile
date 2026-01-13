@@ -1,4 +1,4 @@
-DISTS:=sid trixie bookworm bullseye buster stretch wheezy precise trusty xenial bionic focal jammy noble
+DISTS:=sid trixie bookworm bullseye jammy noble
 
 all: clean
 	for i in $(DISTS) ; do \
