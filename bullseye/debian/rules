@@ -42,6 +42,7 @@ EXTRA_EXCLUDED_MODULES += pa
 EXTRA_EXCLUDED_MODULES += iptrtpproxy
 EXTRA_EXCLUDED_MODULES += nats
 EXTRA_EXCLUDED_MODULES += tls_wolfssl
+EXTRA_EXCLUDED_MODULES += auth_blockchain
 ## --EXCLUDED--
 
 
@@ -88,7 +89,6 @@ PACKAGE_GROUPS += secsipid
 PACKAGE_GROUPS += lwsc
 PACKAGE_GROUPS += microhttpd
 PACKAGE_GROUPS += kafka
-PACKAGE_GROUPS += auth_blockchain
 
 # Module groups to be packaged onto kamailio-extra-modules.
 EXTRA_GROUPS += ev
@@ -114,5 +114,8 @@ override_dh_auto_configure:
 		-DUSE_GIT=OFF \
 		-DEXCLUDE_MODULES="$(EXCLUDED_MODULES) $(EXTRA_EXCLUDED_MODULES)" \
 		-DMODULE_GROUP_NAME="KSTANDARD $(shell echo "$(addprefix K, $(PACKAGE_GROUPS) $(EXTRA_GROUPS))"| tr '[:lower:]' '[:upper:]')"
+
+execute_after_dh_auto_build:
+	cmake --build "obj-${DEB_HOST_GNU_TYPE}" -t dbschema
 
 override_dh_auto_test:
