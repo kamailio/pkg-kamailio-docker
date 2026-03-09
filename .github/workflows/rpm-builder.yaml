@@ -125,7 +125,7 @@ jobs:
 
     - name: Image metadata
       id: metadata
-      uses: docker/metadata-action@v5
+      uses: docker/metadata-action@v6
       with:
         # list of Docker images to use as base name for tags
         images: |
