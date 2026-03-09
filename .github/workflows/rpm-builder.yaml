@@ -108,7 +108,7 @@ jobs:
       contents: write
     steps:
     - name: Login to RedHat Container Registry
-      uses: docker/login-action@v3
+      uses: docker/login-action@v4
       if: contains(matrix.os, 'rhel')
       with:
         registry: registry.redhat.io
@@ -201,7 +201,7 @@ jobs:
         merge-multiple: true
 
     - name: Login to GitHub Container Registry
-      uses: docker/login-action@v3
+      uses: docker/login-action@v4
       with:
         registry: ${{ env.IMAGE_REPO }}
         username: ${{ github.repository_owner }}
