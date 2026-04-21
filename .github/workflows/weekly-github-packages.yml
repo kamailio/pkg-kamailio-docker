@@ -24,8 +24,8 @@ jobs:
     strategy:
       matrix:
         dist:
-          - bullseye
           - bookworm
+          - trixie
           - sid
     steps:
       - name: Set up QEMU
