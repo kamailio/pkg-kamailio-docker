@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian/eol:bullseye
 LABEL org.opencontainers.image.authors="Victor Seva <linuxmaniac@torreviejawireless.org>"
 
 # Important! Update this no-op ENV variable when this Dockerfile
@@ -7,8 +7,10 @@ LABEL org.opencontainers.image.authors="Victor Seva <linuxmaniac@torreviejawirel
 # old cached versions when the Dockerfile is built.
 ENV REFRESHED_AT="2025-09-11"
 
+# fix repositories
+RUN sed -i -e 's/deb.debian.org/archive.debian.org/g' -e '/security.debian.org/d' -e '/bullseye-updates/d' /etc/apt/sources.list
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN echo MIRRORSITE=http://deb.debian.org/debian > /etc/pbuilderrc
+RUN echo MIRRORSITE=http://archive.debian.org/debian > /etc/pbuilderrc
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -qq --assume-yes  clang-11 pbuilder cmake
 
 VOLUME /code
