@@ -33,7 +33,7 @@ jobs:
       dist: ${{ steps.set-matrix.outputs.matrix }}
   docker:
     needs: pre-docker
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64, docker]
     permissions:
       contents: read
       packages: write
